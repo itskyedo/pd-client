@@ -1,5 +1,11 @@
 # PD Client
 
+[![MIT License](https://img.shields.io/github/license/itskyedo/pd-client?color=blue)](https://github.com/itskyedo/pd-client/blob/main/LICENSE)
+[![Project Status](https://img.shields.io/badge/project_status-pre--alpha-red)](https://github.com/itskyedo/pd-client)
+[![Last Commit](https://img.shields.io/github/last-commit/itskyedo/pd-client/main?color=orange)](https://github.com/itskyedo/pd-client)
+[![Commit Activity](https://img.shields.io/github/commit-activity/m/itskyedo/pd-client/main?color=brightgreen)](https://github.com/itskyedo/pd-client)
+[![GitHub Stars](https://img.shields.io/github/stars/itskyedo/pd-client)](https://github.com/itskyedo/pd-client)
+
 > [!IMPORTANT]
 > This is an unofficial library developed independently and is not affiliated
 > with or officially supported by PagerDuty.
