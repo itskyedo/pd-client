@@ -1,0 +1,7 @@
+# Schema configuration
+
+core-v2=https://raw.githubusercontent.com/PagerDuty/api-schema/refs/heads/main/reference/REST/openapiv3.json
+events-v1=https://raw.githubusercontent.com/PagerDuty/api-schema/refs/heads/main/reference/events-v1/openapiv3.json
+events-v2=https://raw.githubusercontent.com/PagerDuty/api-schema/refs/heads/main/reference/events-v2/openapiv3.json
+#mcp=https://raw.githubusercontent.com/PagerDuty/api-schema/refs/heads/main/reference/mcp/openapiv3.json
+#scim=https://raw.githubusercontent.com/PagerDuty/api-schema/refs/heads/main/reference/scim/openapiv3.json

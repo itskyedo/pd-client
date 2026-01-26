@@ -1,0 +1,91 @@
+{
+  "private": true,
+  "name": "@itskyedo/pd-client",
+  "version": "0.0.0",
+  "author": "Kyedo <hey@kyedo.dev> (https://github.com/itskyedo)",
+  "description": "An unofficial TypeScript client for PagerDuty",
+  "license": "MIT",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "pagerduty",
+    "api"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itskyedo/pd-client.git"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/itskyedo"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "tsdown",
+    "build:schemas": "./scripts/build-schemas.sh",
+    "dev": "tsdown --watch",
+    "formatcheck": "prettier --check .",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint --max-warnings 0",
+    "lintfix": "eslint --fix",
+    "check": "pnpm typecheck && pnpm lint && pnpm formatcheck",
+    "fix": "pnpm format && pnpm lintfix",
+    "test": "vitest",
+    "testwatch": "vitest --watch"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "typescript": ">=5"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.8",
+    "@commitlint/cli": "^20.3.1",
+    "@eslint/js": "^9.39.2",
+    "@typescript-eslint/parser": "^8.53.1",
+    "@vitest/coverage-v8": "^4.0.18",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-jsdoc": "^62.4.0",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-sort": "^4.0.0",
+    "lefthook": "^2.0.15",
+    "openapi-typescript": "^7.10.1",
+    "prettier": "^3.8.1",
+    "prettier-plugin-jsdoc": "^1.8.0",
+    "tsdown": "^0.20.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.53.1",
+    "vitest": "^4.0.18"
+  },
+  "dependencies": {
+    "openapi-fetch": "^0.15.0"
+  }
+}
