@@ -13,7 +13,11 @@ import {
 } from '../../types/runtime.ts';
 import { getAbility } from './abilities/get-ability.ts';
 import { listAbilities } from './abilities/list-abilities.ts';
+import { createAddon } from './addons/create-addon.ts';
+import { deleteAddon } from './addons/delete-addon.ts';
+import { getAddon } from './addons/get-addon.ts';
 import { listAddons } from './addons/list-addons.ts';
+import { updateAddon } from './addons/update-addon.ts';
 
 export interface CoreV2 extends ApiRuntime<
   paths,
@@ -66,5 +70,10 @@ export type CoreV2Methods = typeof methods;
 const methods = {
   listAbilities,
   getAbility,
+
   listAddons,
+  createAddon,
+  getAddon,
+  deleteAddon,
+  updateAddon,
 } as const satisfies GenericMethods;
