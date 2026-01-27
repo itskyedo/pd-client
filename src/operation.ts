@@ -7,8 +7,8 @@ import { type GenericApiRuntime } from './types/runtime.ts';
 
 export type OperationTypes<
   TRuntime extends GenericApiRuntime,
-  TPath extends keyof TRuntime['~paths'],
   TMethod extends HttpMethod,
+  TPath extends keyof TRuntime['~paths'],
 > =
   NonNullable<TRuntime['~paths'][TPath]> extends infer Path extends OpenApiPath
     ? Required<
@@ -25,13 +25,14 @@ export type OperationTypes<
 export function op<const TRuntime extends GenericApiRuntime>() {
   return {
     define<
-      const TPath extends keyof TRuntime['~paths'],
       const TMethod extends HttpMethod,
-    >(props: { path: TPath; method: TMethod }) {
+      const TPath extends keyof TRuntime['~paths'],
+    >(props: { method: TMethod; path: TPath }) {
       return props as {
-        '~types': OperationTypes<TRuntime, TPath, TMethod>;
-        path: TPath;
+        '~types': OperationTypes<TRuntime, TMethod, TPath>;
+
         method: TMethod;
+        path: TPath;
       };
     },
   };
