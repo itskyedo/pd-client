@@ -1,20 +1,24 @@
 import {
   type HttpMethod,
-  type OpenApiParameters,
+  type OpenApiOperation,
   type OpenApiPath,
 } from './types/openapi.ts';
 import { type GenericApiRuntime } from './types/runtime.ts';
 
-export type OperationParameters<
+export type OperationTypes<
   TRuntime extends GenericApiRuntime,
   TPath extends keyof TRuntime['~paths'],
   TMethod extends HttpMethod,
 > =
   NonNullable<TRuntime['~paths'][TPath]> extends infer Path extends OpenApiPath
-    ? NonNullable<
-        NonNullable<Path[Lowercase<TMethod>]>['parameters']
-      > extends infer Params extends OpenApiParameters
-      ? Required<Params>
+    ? Required<
+        NonNullable<NonNullable<Path[Lowercase<TMethod>]>>
+      > extends infer Operation extends Required<OpenApiOperation>
+      ? Required<Operation['parameters']> & {
+          body: NonNullable<
+            Operation['requestBody']['content']['application/json']
+          >;
+        }
       : never
     : never;
 
@@ -25,7 +29,7 @@ export function op<const TRuntime extends GenericApiRuntime>() {
       const TMethod extends HttpMethod,
     >(props: { path: TPath; method: TMethod }) {
       return props as {
-        '~params': OperationParameters<TRuntime, TPath, TMethod>;
+        '~types': OperationTypes<TRuntime, TPath, TMethod>;
         path: TPath;
         method: TMethod;
       };

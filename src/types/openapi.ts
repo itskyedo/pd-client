@@ -17,9 +17,15 @@ export interface OpenApiParameters {
   cookie?: Record<string, any>;
 }
 
+export interface OpenApiRequestBody {
+  content: {
+    'application/json'?: Record<string, any>;
+  };
+}
+
 export interface OpenApiOperation {
   parameters?: OpenApiParameters;
-  requestBody?: Record<string, any>;
+  requestBody?: OpenApiRequestBody;
   responses: OpenApiResponses;
 }
 

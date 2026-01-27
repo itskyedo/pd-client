@@ -12,7 +12,7 @@ const operation = op<CoreV2>().define({
 
 export function getAbility(
   this: Client<CoreV2, EventsRuntime>,
-  id: Operation['~params']['path']['id'],
+  id: Operation['~types']['path']['id'],
 ) {
   return handleApiResponse(
     this.fetchers.core[operation.method](operation.path, {

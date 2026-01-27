@@ -11,12 +11,12 @@ const operation = op<CoreV2>().define({
 });
 
 export interface ListAddonsProps {
-  limit?: Operation['~params']['query']['limit'];
-  offset?: Operation['~params']['query']['offset'];
-  total?: Operation['~params']['query']['total'];
-  filter?: Operation['~params']['query']['filter'];
-  include?: [] | [Operation['~params']['query']['include[]']];
-  serviceIds?: Operation['~params']['query']['service_ids[]'];
+  limit?: Operation['~types']['query']['limit'];
+  offset?: Operation['~types']['query']['offset'];
+  total?: Operation['~types']['query']['total'];
+  filter?: Operation['~types']['query']['filter'];
+  include?: [] | [Operation['~types']['query']['include[]']];
+  serviceIds?: Operation['~types']['query']['service_ids[]'];
 }
 
 export function listAddons(
