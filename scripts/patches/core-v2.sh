@@ -50,7 +50,17 @@ patch_reference_type_intersections() {
   apply_sed "s/\(${capture_group}\) \&/Omit<\1, 'type'> \&/g"
 }
 
+# Fix Tag.type intersections
+#
+# Types that intersect with the Tag schema are resolving to `never` due to
+# conflicting literal types with the `type` property.
+patch_tag_type_intersections() {
+  capture_group='components\["schemas"\]\["Tag"\]'
+  apply_sed "s/\(${capture_group}\) \&/Omit<\1, 'type'> \&/g"
+}
+
 patch_conflict_schema_refs
 patch_tag_schema_refs
 patch_never_record_intersections
 patch_reference_type_intersections
+patch_tag_type_intersections

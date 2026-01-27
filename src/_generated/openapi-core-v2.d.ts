@@ -8308,7 +8308,7 @@ export interface components {
          * @example subdomain
          */
         AutomationActionsRunbookBaseURI: string;
-        AutomationActionsRunner: components["schemas"]["Tag"] & {
+        AutomationActionsRunner: Omit<components["schemas"]["Tag"], 'type'> & {
             runner_type: components["schemas"]["AutomationActionsRunnerTypeEnum"];
             /** @example us-west-2 prod runner */
             name: string;
@@ -8410,7 +8410,7 @@ export interface components {
              */
             permissions: ("create" | "update" | "delete" | "invoke")[];
         };
-        AutomationActionsInvocation: components["schemas"]["Tag"] & {
+        AutomationActionsInvocation: Omit<components["schemas"]["Tag"], 'type'> & {
             action_snapshot: {
                 /** @example Restart apache */
                 name: string;
@@ -8445,7 +8445,7 @@ export interface components {
                 incident?: components["schemas"]["IncidentReference"];
             };
         };
-        AutomationActionsAbstractAction: components["schemas"]["Tag"] & {
+        AutomationActionsAbstractAction: Omit<components["schemas"]["Tag"], 'type'> & {
             /** @example Restart apache */
             name: string;
             /** @example Restarts apache on the us-west-2-shopping-cart host */
@@ -8970,7 +8970,7 @@ export interface components {
             /** @enum {string} */
             type?: "acknowledge_log_entry_reference" | "annotate_log_entry_reference" | "assign_log_entry_reference" | "escalate_log_entry_reference" | "exhaust_escalation_path_log_entry_reference" | "notify_log_entry_reference" | "reach_trigger_limit_log_entry_reference" | "repeat_escalation_path_log_entry_reference" | "resolve_log_entry_reference" | "snooze_log_entry_reference" | "trigger_log_entry_reference" | "unacknowledge_log_entry_reference";
         };
-        LogEntry: components["schemas"]["Tag"] & {
+        LogEntry: Omit<components["schemas"]["Tag"], 'type'> & {
             /** @enum {string} */
             type?: "acknowledge_log_entry" | "annotate_log_entry" | "assign_log_entry" | "delegate_log_entry" | "escalate_log_entry" | "exhaust_escalation_path_log_entry" | "notify_log_entry" | "reach_ack_limit_log_entry" | "reach_trigger_limit_log_entry" | "repeat_escalation_path_log_entry" | "resolve_log_entry" | "snooze_log_entry" | "trigger_log_entry" | "unacknowledge_log_entry" | "urgency_change_log_entry" | "field_value_change_log_entry" | "custom_field_value_change_log_entry";
             /**
@@ -9055,7 +9055,7 @@ export interface components {
             /** @enum {string} */
             type?: "full_page_addon_reference" | "incident_show_addon_reference";
         };
-        Addon: components["schemas"]["Tag"] & {
+        Addon: Omit<components["schemas"]["Tag"], 'type'> & {
             /**
              * @description The type of Add-on.
              * @enum {string}
@@ -9069,7 +9069,7 @@ export interface components {
              */
             src: string;
         };
-        BusinessService: components["schemas"]["Tag"] & {
+        BusinessService: Omit<components["schemas"]["Tag"], 'type'> & {
             /** @description The name of the business service. */
             name?: string;
             /** @description The user-provided description of the business service. */
@@ -9095,7 +9095,7 @@ export interface components {
             /** @enum {string} */
             type?: "business_service_reference";
         };
-        ChangeEvent: components["schemas"]["Tag"] & {
+        ChangeEvent: Omit<components["schemas"]["Tag"], 'type'> & {
             /**
              * Format: date-time
              * @description The time at which the emitting tool detected or generated the event.
@@ -9499,7 +9499,7 @@ export interface components {
             /** @enum {string} */
             type?: "assignment_notification_rule_reference";
         };
-        NotificationRule: components["schemas"]["Tag"] & {
+        NotificationRule: Omit<components["schemas"]["Tag"], 'type'> & {
             /**
              * @description The type of object being created.
              * @default assignment_notification_rule
@@ -9519,7 +9519,7 @@ export interface components {
             /** @enum {string} */
             type?: "email_contact_method_reference" | "phone_contact_method_reference" | "push_notification_contact_method_reference" | "sms_contact_method_reference";
         };
-        ContactMethod: components["schemas"]["Tag"] & Omit<{
+        ContactMethod: Omit<components["schemas"]["Tag"], 'type'> & Omit<{
             /**
              * @description The type of contact method being created.
              * @enum {string}
@@ -9637,7 +9637,7 @@ export interface components {
             /** @description The summary of the session */
             readonly summary: string;
         };
-        User: components["schemas"]["Tag"] & {
+        User: Omit<components["schemas"]["Tag"], 'type'> & {
             /** @description The name of the user. */
             name: string;
             /**
@@ -9687,7 +9687,7 @@ export interface components {
             /** @enum {string} */
             type?: "team_reference";
         };
-        Team: components["schemas"]["Tag"] & {
+        Team: Omit<components["schemas"]["Tag"], 'type'> & {
             /**
              * @description The type of object being created.
              * @default team
@@ -9865,7 +9865,7 @@ export interface components {
             /** @description The name of the Incident Type. */
             name?: string;
         };
-        Incident: components["schemas"]["Tag"] & {
+        Incident: Omit<components["schemas"]["Tag"], 'type'> & {
             /** @description The number of the incident. This is unique across your account. */
             readonly incident_number?: number;
             /** @description A succinct description of the nature, symptoms, cause, or effect of the incident. */
@@ -9960,7 +9960,7 @@ export interface components {
             /** @enum {string} */
             type?: "escalation_policy_reference";
         };
-        EscalationPolicy: components["schemas"]["Tag"] & {
+        EscalationPolicy: Omit<components["schemas"]["Tag"], 'type'> & {
             /**
              * @description The type of object being created.
              * @default escalation_policy
@@ -10021,7 +10021,7 @@ export interface components {
             /** @enum {string} */
             type?: "extension_reference";
         };
-        Extension: components["schemas"]["Tag"] & {
+        Extension: Omit<components["schemas"]["Tag"], 'type'> & {
             /** @description The name of the extension. */
             name: string;
             /**
@@ -10050,7 +10050,7 @@ export interface components {
             /** @enum {string} */
             type?: "service_reference";
         };
-        Service: components["schemas"]["Tag"] & {
+        Service: Omit<components["schemas"]["Tag"], 'type'> & {
             /**
              * @description The type of object being created.
              * @default service
@@ -10282,13 +10282,13 @@ export interface components {
             /** @enum {string} */
             type?: "priority_reference";
         };
-        Priority: components["schemas"]["Tag"] & {
+        Priority: Omit<components["schemas"]["Tag"], 'type'> & {
             /** @description The user-provided short name of the priority. */
             name?: string;
             /** @description The user-provided description of the priority. */
             description?: string;
         };
-        Integration: components["schemas"]["Tag"] & {
+        Integration: Omit<components["schemas"]["Tag"], 'type'> & {
             /** @enum {string} */
             type?: "aws_cloudwatch_inbound_integration" | "cloudkick_inbound_integration" | "event_transformer_api_inbound_integration" | "generic_email_inbound_integration" | "generic_events_api_inbound_integration" | "keynote_inbound_integration" | "nagios_inbound_integration" | "pingdom_inbound_integration" | "sql_monitor_inbound_integration" | "events_api_v2_inbound_integration";
             /** @description The name of this integration. */
@@ -10343,7 +10343,7 @@ export interface components {
             /** @enum {string} */
             type?: "maintenance_window_reference";
         };
-        MaintenanceWindow: components["schemas"]["Tag"] & {
+        MaintenanceWindow: Omit<components["schemas"]["Tag"], 'type'> & {
             /**
              * @description The type of object being created.
              * @default maintenance_window
@@ -10372,7 +10372,7 @@ export interface components {
             /** @enum {string} */
             type?: "schedule_reference";
         };
-        Schedule: components["schemas"]["Tag"] & {
+        Schedule: Omit<components["schemas"]["Tag"], 'type'> & {
             /**
              * @description The type of object being created.
              * @default schedule
@@ -10481,7 +10481,7 @@ export interface components {
             url_slug?: string;
             name?: string;
         };
-        Override: components["schemas"]["Tag"] & {
+        Override: Omit<components["schemas"]["Tag"], 'type'> & {
             readonly id?: string;
             /**
              * Format: date-time
@@ -10611,7 +10611,7 @@ export interface components {
             /** @enum {string} */
             type?: "vendor_reference";
         };
-        Vendor: components["schemas"]["Tag"] & {
+        Vendor: Omit<components["schemas"]["Tag"], 'type'> & {
             /** @description The short name of the vendor */
             readonly name?: string;
             /**
@@ -10703,7 +10703,7 @@ export interface components {
             type: "merge_resolve_reason";
             incident?: components["schemas"]["IncidentReference"];
         };
-        Alert: components["schemas"]["Tag"] & {
+        Alert: Omit<components["schemas"]["Tag"], 'type'> & {
             /**
              * Format: date-time
              * @description The date/time the alert was first triggered.
@@ -10783,7 +10783,7 @@ export interface components {
             /** @description Additional incident details. */
             details?: Record<string, never>;
         };
-        IncidentWorkflow: components["schemas"]["Tag"] & {
+        IncidentWorkflow: Omit<components["schemas"]["Tag"], 'type'> & {
             /** @enum {string} */
             type?: "incident_workflow";
             /** @description A descriptive name for the Incident Workflow */
@@ -10812,7 +10812,7 @@ export interface components {
              */
             is_enabled: boolean;
             /** @description The ordered list of steps that execute sequentially as part of the workflow */
-            steps?: (components["schemas"]["Tag"] & {
+            steps?: (Omit<components["schemas"]["Tag"], 'type'> & {
                 /** @enum {string} */
                 type?: "step";
                 /** @description A descriptive name for the Step */
@@ -10840,7 +10840,7 @@ export interface components {
                         name: string;
                         /** @description The configured value of the Inline Steps Input */
                         value: {
-                            steps?: (components["schemas"]["Tag"] & {
+                            steps?: (Omit<components["schemas"]["Tag"], 'type'> & {
                                 /** @enum {string} */
                                 type?: "step";
                                 /** @description A descriptive name for the Step */
@@ -10885,7 +10885,7 @@ export interface components {
                 };
             })[];
         };
-        IncidentWorkflowAction: components["schemas"]["Tag"] & {
+        IncidentWorkflowAction: Omit<components["schemas"]["Tag"], 'type'> & {
             /** @enum {string} */
             type?: "action";
             /** @description The Verified Domain of the account that created the action */
@@ -10966,7 +10966,7 @@ export interface components {
             readonly type?: "incident_workflow_instance";
             incident?: components["schemas"]["Reference"];
         };
-        IncidentWorkflowTriggerInstance: components["schemas"]["Tag"] & {
+        IncidentWorkflowTriggerInstance: Omit<components["schemas"]["Tag"], 'type'> & {
             /** @enum {string} */
             type?: "incident_workflow_instance";
             /** @description A descriptive name for the Incident Workflow Instance */
@@ -11022,7 +11022,7 @@ export interface components {
                 value?: string;
             })[];
         };
-        IncidentWorkflowTrigger: components["schemas"]["Tag"] & {
+        IncidentWorkflowTrigger: Omit<components["schemas"]["Tag"], 'type'> & {
             /** @enum {string} */
             type?: "workflow_trigger";
             /** @description Human readable name for the trigger type */
@@ -13165,7 +13165,7 @@ export interface components {
             /** @description The type of the object returned by the API - in this case, a Status Page Status. */
             type?: string;
         };
-        WorkflowIntegration: components["schemas"]["Tag"] & {
+        WorkflowIntegration: Omit<components["schemas"]["Tag"], 'type'> & {
             /** @description The ID of the integration */
             readonly id?: string;
             /** @description The type of the resource */
@@ -13219,7 +13219,7 @@ export interface components {
                 readonly self?: string;
             } | null;
         };
-        WorkflowIntegrationConnection: components["schemas"]["Tag"] & {
+        WorkflowIntegrationConnection: Omit<components["schemas"]["Tag"], 'type'> & {
             /** @description The ID of the connection */
             readonly id?: string;
             /** @description The type of the connection */
@@ -19722,7 +19722,7 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": {
-                    trigger: components["schemas"]["Tag"] & {
+                    trigger: Omit<components["schemas"]["Tag"], 'type'> & {
                         /** @enum {string} */
                         type?: "workflow_trigger";
                         /** @enum {string} */
@@ -19840,7 +19840,7 @@ export interface operations {
         requestBody?: {
             content: {
                 "application/json": {
-                    trigger: components["schemas"]["Tag"] & {
+                    trigger: Omit<components["schemas"]["Tag"], 'type'> & {
                         /** @enum {string} */
                         type?: "workflow_trigger";
                         /** @description Human readable name for the trigger type */
