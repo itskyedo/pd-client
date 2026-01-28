@@ -32,8 +32,9 @@ export function listAddons(
           offset: props?.offset,
           total: props?.total,
           filter: props?.filter,
-          'include[]': props?.include?.[0],
           'service_ids[]': props?.serviceIds,
+          // Upstream code incorrectly types `include[]` as `string | undefined`
+          'include[]': props?.include?.[0] satisfies string | undefined,
         },
       },
     }),
