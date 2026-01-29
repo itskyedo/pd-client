@@ -1,5 +1,4 @@
 import { type FetchResponse } from 'openapi-fetch';
-import { type IsOptional } from './types/helpers.ts';
 import { type MediaType, type OpenApiOperation } from './types/openapi.ts';
 
 export type ApiResponse<
@@ -15,22 +14,25 @@ export type ApiResponse<
           >
         : ErrorResponse<
             TStatusCode,
-            TransformedResponse<TStatusCode, TOperation, TTransforms>
+            NonNullable<
+              TransformedResponse<TStatusCode, TOperation, TTransforms>
+            >
           >
       : never;
   }[keyof TOperation['responses']]
 >;
 
 export interface SuccessResponse<TStatus extends number, TData> {
-  readonly success: true;
   readonly status: TStatus;
   readonly data: TData;
   readonly error?: never;
   readonly response: Response;
 }
 
-export interface ErrorResponse<TStatus extends number, TError> {
-  readonly success: false;
+export interface ErrorResponse<
+  TStatus extends number,
+  TError extends Record<any, any>,
+> {
   readonly status: TStatus;
   readonly data?: never;
   readonly error: TError;
@@ -41,28 +43,30 @@ export type TransformedResponse<
   TStatusCode extends keyof TOperation['responses'],
   TOperation extends OpenApiOperation,
   TTransforms extends ResponseTransforms<TOperation>,
-> = TStatusCode extends number
-  ? IsOptional<TTransforms, TStatusCode> extends false
-    ? TTransforms[TStatusCode] extends ResponseTransformFunction
-      ? ReturnType<TTransforms[TStatusCode]>
-      : ResponseJsonContent<TOperation, TStatusCode>
-    : ResponseJsonContent<TOperation, TStatusCode>
-  : never;
+> = TTransforms[TStatusCode] extends ResponseTransformFunction
+  ? ReturnType<TTransforms[TStatusCode]>
+  : ResponseJsonContent<TOperation, TStatusCode>;
 
 export type ResponseTransforms<TOperation extends OpenApiOperation> = {
-  [TStatusCode in keyof TOperation['responses']]?: TStatusCode extends number
-    ? (value: ResponseJsonContent<TOperation, TStatusCode>) => unknown
-    : never;
+  [TStatusCode in keyof TOperation['responses']]?: ResponseTransformFunction<
+    ResponseJsonContent<TOperation, TStatusCode>,
+    Record<any, any>
+  >;
 };
 
 export type ResponseJsonContent<
   TOperation extends OpenApiOperation,
-  TStatusCode extends number,
-> = NonNullable<
-  TOperation['responses'][TStatusCode]['content']
->['application/json'];
+  TStatusCode extends keyof TOperation['responses'],
+> = TStatusCode extends number
+  ? NonNullable<
+      TOperation['responses'][TStatusCode]['content']
+    >['application/json']
+  : never;
 
-type ResponseTransformFunction = (value: any) => unknown;
+type ResponseTransformFunction<
+  TValue = any,
+  TReturn extends Record<any, any> = Record<any, any>,
+> = (value: TValue, response: Response) => TReturn;
 
 export async function handleApiResponse<
   const TOperation extends OpenApiOperation,
@@ -82,16 +86,20 @@ export async function handleApiResponse<
     return {
       success: true,
       status: response.status,
-      data: typeof transform === 'function' ? transform(data) : data,
+      data: typeof transform === 'function' ? transform(data, response) : data,
       response,
     } satisfies SuccessResponse<number, unknown> as Awaited<
       ApiResponse<TOperation, TTransforms>
     >;
   } else {
+    const rawError = error ?? {};
     return {
       success: false,
       status: response.status,
-      error: typeof transform === 'function' ? transform(error) : error,
+      error:
+        typeof transform === 'function'
+          ? (transform(rawError, response) ?? {})
+          : rawError,
       response,
     } satisfies ErrorResponse<number, unknown> as Awaited<
       ApiResponse<TOperation, TTransforms>
