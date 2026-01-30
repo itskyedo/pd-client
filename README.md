@@ -26,7 +26,7 @@ safety. This exposes several underlying pain points:
 - High cognitive overhead and reliance on implicit domain knowledge increases
   integration and support costs
 - Inconsistent API behavior increases friction by pushing implementation
-  complexity into downstream codebases
+  complexity onto downstream codebases
 - Modern developer expectations require a dedicated developer experience layer,
   not just an HTTP client
 
@@ -71,7 +71,7 @@ export const pagerduty = createClient({
 
 export async function builtInMethodsExample(): void {
   // Fully type-safe API
-  const response = await pagerduty.createIncident({
+  const { data, error } = await pagerduty.createIncident({
     title: 'The server is on fire.',
     service: {
       id: 'PWIXJZS',
@@ -92,18 +92,18 @@ export async function builtInMethodsExample(): void {
     },
   });
 
-  if (!response.success) {
-    console.error(response.error);
+  if (error) {
+    console.error(error);
     return;
   }
 
-  console.log(`Incident created: ${response.data.incident.id}`);
+  console.log(`Incident created: ${data.incident.id}`);
 }
 
 // Alternatively, you can use the inner implementation if you need more control
-// of if a built-in method has not yet been created.
+// or if a built-in method has not yet been created.
 export async function httpMethodsExample(): void {
-  // This is also fully-type, including the endpoint path and parameters
+  // This is also fully-typed, including the endpoint path and parameters
   const response = await pagerduty.fetchers.core.POST('/incidents', {
     headers: {...}
     body: {
