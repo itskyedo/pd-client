@@ -5,6 +5,7 @@ set -eu
 OUTPUT_DIR="./src/_generated"
 SCHEMAS_FILE="./schemas"
 PATCHES_DIR="./scripts/patches"
+TIMESTAMP=""
 
 check_prerequisites() {
   if [ ! -f "./package.json" ]; then
@@ -33,6 +34,36 @@ prepare_output_dir() {
   fi
 }
 
+fetch_date_from_url() {
+  url="$1"
+  curl -sI --max-time 5 "$url" 2>/dev/null | grep -i "^date:" | cut -d' ' -f2- | tr -d '\r'
+}
+
+set_timestamp() {
+  echo "Fetching server time"
+
+  TIMESTAMP=$(fetch_date_from_url "https://www.google.com")
+  if [ -n "$TIMESTAMP" ]; then
+    echo "$TIMESTAMP"
+    return 0
+  fi
+
+  TIMESTAMP=$(fetch_date_from_url "https://www.cloudflare.com")
+  if [ -n "$TIMESTAMP" ]; then
+    echo "$TIMESTAMP"
+    return 0
+  fi
+
+  TIMESTAMP=$(fetch_date_from_url "https://www.microsoft.com")
+  if [ -n "$TIMESTAMP" ]; then
+    echo "$TIMESTAMP"
+    return 0
+  fi
+
+  echo "Error: Failed to get the server time" >&2
+  return 1
+}
+
 generate_types() {
   name="$1"
   url="$2"
@@ -42,6 +73,10 @@ generate_types() {
     echo "Error: Failed to generate $name" >&2
     exit 1
   fi
+
+  printf '/*\n * Generated on %s\n */\n\n' "$TIMESTAMP" >"$output_path.tmp"
+  cat "$output_path" >>"$output_path.tmp"
+  mv "$output_path.tmp" "$output_path"
 }
 
 apply_patches() {
@@ -87,4 +122,5 @@ process_schemas() {
 
 check_prerequisites
 prepare_output_dir
+set_timestamp
 process_schemas
